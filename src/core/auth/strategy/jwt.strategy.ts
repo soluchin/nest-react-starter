@@ -10,7 +10,6 @@ import { UserDto } from 'src/core/user/dtos/user.dto';
 export class JwtStrategy extends PassportStrategy(Strategy) {
     constructor() {
         super({
-            // jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
             jwtFromRequest: ExtractJwt.fromExtractors([
                 (request: Request) => {
                     return request.cookies?.accessToken;
@@ -20,7 +19,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
             secretOrKey: config().jwt.secret,
         });
     }
-
     async validate(payload: JwtPayloadModel) {
         var user = new UserDto()
         user.id = payload.sub;

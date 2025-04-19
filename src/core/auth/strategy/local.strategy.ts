@@ -12,13 +12,12 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
       passwordField: 'password',
     });
   }
-
+  
   async validate(username: string, password: string): Promise<UserDto> {
     const user = await this.userService.findByUsername(username);
     if(!user){
       throw new UnauthorizedException('Invalid credentials');
     }
-
     const isPasswordValid = await this.userService.validatePassword(
       password,
       username,
@@ -26,7 +25,6 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     if (!isPasswordValid) {
       throw new UnauthorizedException('Invalid credentials');
     }
-
     var userResult = new UserDto()
     userResult.id = user.id;
     userResult.username = user.username
