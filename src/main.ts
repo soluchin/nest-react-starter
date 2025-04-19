@@ -3,17 +3,17 @@ import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import * as CookieParser from 'cookie-parser';
 import { join } from 'path';
+import config from './config/config';
 
-const appPort = process.env.APP_PORT || 3000;
-const apiPrefix = process.env.API_PREFIX || 'api';
+const appPort = config().port;
+const apiPrefix = config().apiPrefix;
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   app.setGlobalPrefix(apiPrefix);
   app.enableCors({
-    origin:
-      process.env.NODE_ENV == 'production' ? undefined : 'http://localhost:3001',
+    origin: config().env === 'production' ? undefined : 'http://localhost:3001',
     credentials: true,
   });
   app.use(CookieParser());
