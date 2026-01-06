@@ -1,98 +1,263 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# NestJS + React Starter Template
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A full-stack monorepo starter template featuring **NestJS** as the backend API with **React SPA** served as static files. This template implements a Backend-for-Frontend (BFF) pattern with built-in authentication, role-based access control, and database integration using TypeORM.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## ✨ Features
 
-## Description
+- **Monorepo Structure** - Backend (NestJS) and Frontend (React) in a single repository
+- **Backend for Frontend (BFF)** - React SPA served statically from NestJS
+- **TypeORM Integration** - Database abstraction with support for SQLite (dev) and PostgreSQL (prod)
+- **JWT Authentication** - Secure authentication using Passport.js with JWT strategy
+- **Role-Based Access Control (RBAC)** - Permission-based authorization with custom decorators
+- **Base Entity & Service** - Reusable base classes with audit fields (createdBy, createdDate, etc.)
+- **Database Seeding** - Pre-configured seed script for initial users, roles, and permissions
+- **Environment Configuration** - Centralized config with dotenv support
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 🛠️ Tech Stack
 
-## Project setup
+### Backend
+| Technology | Purpose |
+|------------|---------|
+| [NestJS](https://nestjs.com/) v11 | Progressive Node.js framework |
+| [TypeORM](https://typeorm.io/) v0.3 | ORM for database operations |
+| [Passport.js](http://www.passportjs.org/) | Authentication middleware |
+| [JWT](https://jwt.io/) | Token-based authentication |
+| [class-validator](https://github.com/typestack/class-validator) | DTO validation |
+| [class-transformer](https://github.com/typestack/class-transformer) | Object transformation |
+| SQLite / PostgreSQL | Database (dev/prod) |
 
-```bash
-$ npm install
+### Frontend
+| Technology | Purpose |
+|------------|---------|
+| [React](https://react.dev/) v19 | UI library |
+| [Vite](https://vite.dev/) v6 | Build tool & dev server |
+
+## 📁 Project Structure
+
+```
+nest-react-starter/
+├── src/                        # NestJS Backend
+│   ├── common/                 # Shared utilities & base classes
+│   │   ├── base.service.ts     # Generic CRUD service
+│   │   └── common.dto.ts       # Shared DTOs
+│   ├── config/                 # Configuration files
+│   │   ├── config.ts           # Environment config
+│   │   ├── postgres.config.ts  # PostgreSQL TypeORM config
+│   │   └── sqllite.config.ts   # SQLite TypeORM config
+│   ├── core/                   # Core modules
+│   │   ├── auth/               # Authentication module
+│   │   │   ├── guards/         # JWT & Permission guards
+│   │   │   └── strategy/       # Passport strategies
+│   │   └── user/               # User management module
+│   ├── decorators/             # Custom decorators
+│   │   ├── permission.decorator.ts
+│   │   └── public.decorator.ts
+│   ├── entities/               # TypeORM entities
+│   │   ├── base.entity.ts      # Base entity with audit fields
+│   │   └── core/               # Core entities (User, Role, Permission)
+│   ├── utils/                  # Utility functions
+│   ├── app.module.ts           # Root module
+│   ├── main.ts                 # Application entry point
+│   └── seed.core.ts            # Database seeder
+├── client/                     # React Frontend
+│   ├── src/
+│   │   ├── App.jsx
+│   │   └── main.jsx
+│   ├── package.json
+│   └── vite.config.js
+├── test/                       # E2E tests
+└── package.json
 ```
 
-## Compile and run the project
+## 🚀 Getting Started
 
-```bash
-# development
-$ npm run start
+### Prerequisites
 
-# watch mode
-$ npm run start:dev
+- Node.js (v18 or higher recommended)
+- npm or yarn
+- PostgreSQL (for production)
 
-# production mode
-$ npm run start:prod
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd nest-react-starter
+   ```
+
+2. **Install backend dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Install frontend dependencies**
+   ```bash
+   cd client
+   npm install
+   cd ..
+   ```
+
+4. **Configure environment variables**
+   
+   Create a `.env` file in the root directory:
+   ```env
+   NODE_ENV=development
+   APP_PORT=3000
+   API_PREFIX=api
+   
+   # JWT Configuration
+   JWT_SECRET=your-super-secret-key
+   JWT_EXPIRES_IN=1d
+   JWT_REFRESH_TOKEN_EXPIRES_IN=30d
+   
+   # Database (PostgreSQL - for production)
+   DB_HOST=localhost
+   DB_PORT=5432
+   DB_NAME=your_database
+   DB_USER=postgres
+   DB_PASSWORD=your_password
+   ```
+
+5. **Seed the database**
+   ```bash
+   # Development (SQLite)
+   npm run seed-core:dev
+   
+   # Production (PostgreSQL)
+   npm run seed-core:prod
+   ```
+
+### Running the Application
+
+#### Development Mode
+
+1. **Start NestJS backend** (with hot reload)
+   ```bash
+   npm run start:dev
+   ```
+
+2. **Start React dev server** (in a separate terminal)
+   ```bash
+   cd client
+   npm run dev
+   ```
+
+   - Backend API: `http://localhost:3000/api`
+   - React Dev Server: `http://localhost:5173`
+
+#### Production Mode
+
+1. **Build the React client**
+   ```bash
+   cd client
+   npm run build
+   cd ..
+   ```
+
+2. **Build and start NestJS**
+   ```bash
+   npm run build
+   npm run start:prod
+   ```
+
+   Both API and React SPA will be served from `http://localhost:3000`
+
+## 🔐 Authentication & Authorization
+
+### JWT Authentication Flow
+
+1. User logs in via `/api/auth/login`
+2. Server returns JWT access token
+3. Client includes token in `Authorization: Bearer <token>` header
+4. Global `JwtAuthGuard` validates all requests (except `@Public()` routes)
+
+### Role-Based Permissions
+
+```typescript
+// Make route public (no auth required)
+@Public()
+@Get('public-data')
+getPublicData() {}
+
+// Require specific permissions
+@Permissions('users.read', 'users.write')
+@Get('admin-data')
+getAdminData() {}
 ```
 
-## Run tests
+### Default Admin User
+
+After seeding, use these credentials:
+- **Username:** `admin`
+- **Password:** `admin`
+
+## 📝 Creating New Modules
+
+1. **Create entity** extending `BaseEntity`
+   ```typescript
+   @Entity()
+   export class Product extends BaseEntity<Product> {
+     @Column()
+     name: string;
+   }
+   ```
+
+2. **Create service** extending `BaseService`
+   ```typescript
+   @Injectable({ scope: Scope.REQUEST })
+   export class ProductService extends BaseService<Product> {
+     constructor(
+       @InjectRepository(Product) repo: Repository<Product>,
+       @Inject(REQUEST) request,
+     ) {
+       super(repo, request);
+     }
+   }
+   ```
+
+3. **Register in `app.module.ts`**
+
+## 🧪 Testing
 
 ```bash
-# unit tests
-$ npm run test
+# Unit tests
+npm run test
 
-# e2e tests
-$ npm run test:e2e
+# E2E tests
+npm run test:e2e
 
-# test coverage
-$ npm run test:cov
+# Test coverage
+npm run test:cov
 ```
 
-## Deployment
+## 📦 Scripts
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+| Script | Description |
+|--------|-------------|
+| `npm run start` | Start in development mode |
+| `npm run start:dev` | Start with hot reload |
+| `npm run start:prod` | Start production server |
+| `npm run build` | Build for production |
+| `npm run seed-core:dev` | Seed database (SQLite) |
+| `npm run seed-core:prod` | Seed database (PostgreSQL) |
+| `npm run lint` | Run ESLint |
+| `npm run format` | Format code with Prettier |
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+## 🗄️ Database Configuration
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
+- **Development:** SQLite (auto-created as `sqlite.db`)
+- **Production:** PostgreSQL (configure via environment variables)
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+Both configurations use `synchronize: true` - **disable this in production** and use migrations instead.
 
-## Resources
+## 📚 Resources
 
-Check out a few resources that may come in handy when working with NestJS:
+- [NestJS Documentation](https://docs.nestjs.com)
+- [TypeORM Documentation](https://typeorm.io/)
+- [React Documentation](https://react.dev/)
+- [Vite Documentation](https://vite.dev/)
+- [Passport.js Documentation](http://www.passportjs.org/docs/)
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+## 📄 License
 
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+This project is [MIT licensed](LICENSE).
